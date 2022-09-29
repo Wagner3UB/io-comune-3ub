@@ -1,0 +1,9 @@
+@import '@italia/../theme/_site-variables.scss';
+@import 'site-variables';
+@import '@italia/../theme/site.scss';
+
+.public-ui {
+  @import 'custom/main';
+  //import here your site customization styles
+}
+@import 'custom/site/cms';

@@ -1,0 +1,144 @@
+{
+  "name": "<%= projectName %>",
+  "description": "<%= projectDescription %>",
+  "license": "MIT",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [],
+  "addons": <%- addons %>,
+  "scripts": {
+    "start": "razzle start",
+    "develop:npx": "npx -p mrs-developer missdev --config=jsconfig.json --output=addons --fetch-https",
+    "develop": "missdev --config=jsconfig.json --output=addons --fetch-https",
+    "preinstall": "if [ -f $(pwd)/node_modules/.bin/missdev ]; then yarn develop; else yarn develop:npx; fi",
+    "postinstall": "yarn omelette",
+    "omelette": "ln -sf node_modules/design-volto-theme omelette",
+    "build": "razzle build",
+    "deploy": "node deploy.js",
+    "test": "razzle test --env=jsdom --passWithNoTests",
+    "start:prod": "NODE_ENV=production node build/server.js",
+    "i18n": "NODE_ENV=production node ./src/i18n.js"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js(x)?$": "babel-jest",
+      "^.+\\.css$": "jest-css-modules",
+      "^.+\\.scss$": "jest-css-modules",
+      "^.+\\.(png)$": "jest-file",
+      "^.+\\.(jpg)$": "jest-file",
+      "^.+\\.(svg)$": "./node_modules/@plone/volto/jest-svgsystem-transform.js"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!@plone/volto).+\\.js$",
+      "/node_modules/(?!design-volto-theme).+\\.js$"
+    ],
+    "moduleNameMapper": {
+      "@plone/volto/(.*)$": "<rootDir>/node_modules/@plone/volto/src/$1",
+      "@plone/volto/babel": "<rootDir>/node_modules/@plone/volto/babel",
+      "@italia/(.*)$": "<rootDir>/node_modules/design-volto-theme/src/$1",
+      "@package/(.*)$": "<rootDir>/src/$1",
+      "~/(.*)$": "<rootDir>/src/$1"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[jt]s?(x)",
+      "!**/src/addons/volto/**/*"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 10,
+        "functions": 10,
+        "lines": 10,
+        "statements": 10
+      }
+    },
+    "setupFiles": [
+      "@plone/volto/test-setup-globals.js",
+      "@plone/volto/test-setup-config.js"
+    ],
+    "globals": {
+      "__DEV__": true
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json}": [
+      "npx eslint --max-warnings=0 --fix",
+      "npx prettier --single-quote --write"
+    ],
+    "src/**/*.jsx": [
+      "yarn i18n",
+      "git add ."
+    ],
+    "theme/**/*.{css,less,scss}": [
+      "npx stylelint --fix"
+    ],
+    "src/**/*.{css,less,scss}": [
+      "npx stylelint --fix"
+    ],
+    "theme/**/*.overrides": [
+      "npx stylelint --fix --syntax less"
+    ],
+    "src/**/*.overrides": [
+      "npx stylelint --fix --syntax less"
+    ]
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.overrides",
+        "options": {
+          "parser": "less"
+        }
+      }
+    ]
+  },
+  "stylelint": {
+    "extends": [
+      "stylelint-config-idiomatic-order"
+    ],
+    "plugins": [
+      "stylelint-prettier"
+    ],
+    "rules": {
+      "prettier/prettier": true,
+      "rule-empty-line-before": [
+        "always-multi-line",
+        {
+          "except": [
+            "first-nested"
+          ],
+          "ignore": [
+            "after-comment"
+          ]
+        }
+      ]
+    },
+    "ignoreFiles": "theme/themes/default/**/*.overrides"
+  },
+  "engines": {
+    "node": "^10 || ^12 || ^14"
+  },
+  "dependencies": {
+    "design-volto-theme": "<%= designVoltoThemeVersion %>"
+  },
+  "devDependencies": {
+    "@babel/core": "7.11.1",
+    "eslint-plugin-prettier": "3.1.3",
+    "mrs-developer": "^1.5.0",
+    "prettier": "2.0.5",
+    "razzle-plugin-scss": "3.1.5",
+    "sass": "^1.32.12",
+    "stylelint-config-idiomatic-order": "8.1.0",
+    "stylelint-config-prettier": "8.0.1",
+    "stylelint-prettier": "1.1.2",
+    "svg-inline-loader": "0.8.0",
+    "svg-inline-react": "3.2.0"
+  }
+}
