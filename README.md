@@ -108,3 +108,4 @@ That's why we have `pm2 delete myproject-volto && pm2 start ecosystem.config.js`
 ## Update design-volto-theme
 
 In order to update the base theme, we have this handy script: [update-dvt](https://gist.github.com/nzambello/f5db6083635e1d641dbf863355cabff8).
+# io-comune-3ub
