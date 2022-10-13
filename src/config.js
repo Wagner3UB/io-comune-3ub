@@ -8,7 +8,9 @@ import '@plone/volto/config';
 
 export default function applyConfig(voltoConfig) {
   let config = applyItaliaConfig(voltoConfig);
-
+  config.settings.isMultilingual = true;
+  config.settings.supportedLanguages = ['it', 'en'];
+  config.settings.defaultLanguage = 'it';
   config.settings = {
     ...config.settings,
     // italiaThemeViewsConfig: {
@@ -22,11 +24,11 @@ export default function applyConfig(voltoConfig) {
         Se l'oggetto non è strutturato in questo modo, viene usato l'oggetto stesso, altrimenti viene preso il valore della corrispondente alla prop della lingua corrente o alla prop 'default' se esiste.
       */
       ...config.settings.siteProperties,
-      siteTitle: 'Nome del Comune',
-      siteSubtitle: 'Sottotilo comune',
-      parentSiteTitle: 'Regione Emilia-Romagna',
+      siteTitle: 'Comune di Wagner',
+      siteSubtitle: 'Un comune molto particolare',
+      parentSiteTitle: 'Regione Di la e di qua',
       parentSiteURL: 'https://www.regione.emilia-romagna.it/',
-      subsiteParentSiteTitle: 'Nome del Comune - Sottotitolo',
+      subsiteParentSiteTitle: 'Comune di Wagner - The best Comune in the New old World',
       // enableCustomerSatisfaction: false, // false per disabilitare
       //arLoginUrl: '/it/area-riservata',
       //arLogoutUrl: '/logout',
