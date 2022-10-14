@@ -1,0 +1,7 @@
+.block.hero {
+  .toolbar {
+    &::before {
+      content: none;
+    }
+  }
+}

@@ -2,6 +2,9 @@
 @import 'site-variables';
 @import '@italia/../theme/site.scss';
 
+//volto-custom
+@import '@italia/../custom/volto/HeroImageLeft.scss';
+
 .public-ui {
   @import 'custom/main';
   //import here your site customization styles
